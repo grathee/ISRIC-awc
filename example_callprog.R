@@ -11,3 +11,5 @@ install.packages(c("RCurl", "XML", "rgdal", "raster", "sp", "aqp", "mda", "gstat
 install.packages("GSIF", repos=c("http://R-Forge.R-project.org"), type = "source")
 str(x)
 attr(x, "coef")
+data(afsp)
+names(afsp$horizons)
