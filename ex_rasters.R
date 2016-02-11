@@ -20,13 +20,3 @@ for (ind in var){
 	#raster saved in ifolder
 	setwd = ifolder
 }
-
-
-
-GDALinfo(zip)
-x <- AWCPTF(sndp, sltp, clyp, orc, bld, cec, phihox)
-
-str(x)
-attr(x, "coef")
-data(afsp)
-names(afsp$horizons)
