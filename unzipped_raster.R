@@ -8,6 +8,8 @@ setwd(ifolder)
 
 slt <- raster("SLTPPT_sd1_M_1km_T386.tif")
 plot(slt)
+
+#please click the points representative of the xmin,ymin and xmax,ymax on the plot to set the extent
 Ext <- drawExtent()
 
 snd <- raster("SNDPPT_sd1_M_1km_T386.tif")
@@ -36,11 +38,20 @@ df[[1]][[14899]]
 
 #running for each pixel .. takes long
 awc <- c()
-for (i in c(1:49022)){
+
+#run AWCPTF for cropped area
+t <- length(df[,1])
+for (i in c(1:t)){
 x <- AWCPTF(df[[1]][[i]], df[[2]][[i]], df[[3]][[i]], df[[4]][[i]], df[[5]][[i]], df[[6]][[i]], df[[7]][[i]])
 awc <- rbind(awc, x)
 }
 str(awc)
-awc$AWCh1
-awc_raster <- rasterize(slt_crop, slt_crop, field = awc$AWCh1, na.rm = T)
-print (awc_raster)
+awc$WWP
+#create empty raster with resolution, extent of the brick
+awc_raster <- raster(brick_crop)
+summary(awc_raster)
+#replaces values of the raster from NA to the WWP values
+awc_raster <- replace(awc_raster, awc_raster, values = awc$WWP)
+
+summary(awc_raster)
+plot(awc_raster)
